@@ -15,6 +15,20 @@ const tree = {
 		  }] 
 	}] 
 }; 
-find("paper.pdf")(tree); // true 
-find("randomfile")(tree); // false
 
+
+var find = fileName => fileTree => {
+	if(fileTree.files.includes(fileName))
+		return true;
+
+	for(let subDir of fileTree.subFolders){
+		if(find(fileName)(subDir))
+			return true;
+	}
+
+	return false;
+};
+
+console.log(find("paper.pdf")(tree)); // true 
+console.log(find("randomfile")(tree)); // false
+console.log(find("summer3.jpg")(tree)); // true
