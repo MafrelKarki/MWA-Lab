@@ -1,1 +1,37 @@
-Db desing
+The database is designed comprising of "Book", "Student" collections.
+The Book document looks like:
+
+Book
+----------
+
+{
+    name: "String type data",
+    isbn: "String type data",
+    author: "String type data",
+    keyword: Array["String type data"]
+}
+
+The Student document looks like this:
+
+Student
+---------------
+
+{
+        "name" : "String type data",
+        "loan" : Array[
+                {
+                        "book" : {
+                                "name" : "String type data",
+                                "isbn" : "String type data",
+                                "author" : "String type data",
+                                "keyword" : Array["String type data"]
+                        },
+                        "loan_detail" : {
+                                "dueDate" : "Date type data",
+                                "issuedDate" : "Date type data",
+                                "isReturned" : "Boolean type data",
+                                "returnedDate" : "TimeStamp type data"
+                        }
+                }
+        ]
+}
