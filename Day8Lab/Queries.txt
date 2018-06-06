@@ -1,0 +1,68 @@
+1. MongoDb query to display all documents in the collection restaurant
+    db.restaurant.find().pretty()
+
+2. MongoDb query to display the fields restaurant_id, name, district and cuisine for all documents in the collection restaurant.
+    db.restaurant.find({}, {"restaurant_id":1, "name":1, "district":1, "cuisine":1 }).pretty()
+
+3. MongoDb query to display the fields restaurant_id, name, district, cuisine but exclude the field_id for all documents in the collection restaurant.
+    db.restaurant.find({}, {"restaurant_id":1, "name":1, "district":1, "cuisine":1 , "_id":0}).pretty()
+
+4. MongoDb query to display the fields restaurant_id, name, district, zipcode but exclude the field_id for all documents in the collection restaurant.
+    db.restaurant.find({}, {"restaurant_id":1, "name":1, "district":1, "zipcode":1 , "_id":0}).pretty()
+     
+5. MongoDb query to display all the restaurant which is in the district "Bronx"
+    db.restaurant.find({"district":"Bronx"}).pretty()
+
+6. MongoDb query to display the first 5 restaurants which is in the district "Bronx"
+    db.restaurant.find({"district":"Bronx"}).limit(5).pretty()
+
+7. MongoDb query to display the next 5 restaurants after skipping the first 5 which are in the district "Bronx"
+    db.restaurant.find({"district":"Bronx"}).skip(5).limit(5).pretty()
+
+8. MongoDb query to find the restaurants which locates in latitude value less than -95.754168
+    db.restaurant.find({'address.coord.0': {$lt: -95.754168} }).limit(1).pretty()
+
+9. MongoDb query to find the restaurants that does not prepare any cuisine of 'American' and their grade score more than 70 and latitude less than -65.754168
+    db.restaurant.find( { $and: [{cuisine:{$nin:["American "] } }, {grades:{$elemMatch:{score:{$gt: 70}}}}, {'address.coord.0':{$lt: -65.754168}} ] }).limit(10).pretty()
+
+10. MongoDb query to find the restaurant_id, name, district, cuisine for those restaurants which contain 'Wil' as first 3 letters for its name.
+    db.restaurant.find({name:{$regex:'Wil.*' }}, {restaurant_id:1, name:1, district:1, cuisine:1} )
+
+11. MongoDb query to find the restaurant_id, name, district, cuisine for those restaurants which contain 'ces' as last 3 letters for its name.
+    db.restaurant.find({name:{$regex: '(\.)*ces' } }, {restaurant_id:1, name:1, district: 1, cuisine: 1} )
+
+12. MongoDb query to find the restaurant_id, name, district, cuisine for those restaurants which contains 'Reg' as 3 letters somewhere in its name.
+    db.restaurant.find({name:{$regex: '(\.)*Reg(.\)*' } }, {restaurant_id:1, name:1, district: 1, cuisine: 1} )
+
+13. MongoDb query to find the restaurants which belong to district Bronx and prepared either American or Chinese Dish.
+    db.restaurant.find({ $and: [ {district:{$in:["Bronx"]} }, {cuisine:{$in:["Chinese", "American "]} } ] }).limit(5).pretty()
+
+14. MongoDb query to find the restaurant_id, name, district and cuisine for those restaurants which belong to the district "Staten island" or "Queens" or "Bronx" or "Brooklyn"
+    db.restaurant.find({district:{ $nin: ["Staten Island", "Queens", "Bronx", "Brooklyn"]} }, {restaurant_id:1, name:1, district:1, cuisine:1})
+
+15. MongoDb query to find the restaurant_id, name, district and cuisine for those restaurants which belong to the district "Staten island" or "Queens" or "Bronx" or "Brooklyn"
+    db.restaurant.find({district:{ $nin: ["Staten Island", "Queens", "Bronx", "Brooklyn"]} }, {restaurant_id:1, name:1, district:1, cuisine:1})
+    
+16. MongoDb query to find the restaurant_id, name, cuisine for those restaurants which achieved a score which is not more than 10.
+    db.restaurant.find({'grades.score':{$not:{$gt: 10}} }, {restaurant_id:1, name:1, cuisine:1, grades:1} ).limit(10).pretty()
+
+17. MongoDb query to find the restaurant_id, name, address and geographical location, for those restaurants where 2nd element of coord array contains a value which is more than 42 and upto 52
+    db.restaurant.find({'address.coord.1':{$gt:42, $lt:52} }, {restaurant_id:1, name:1, address:1, coord:1}).pretty()
+
+18. MongoDb query to arrange the name of restaurants in ascending order along with all the columns.
+    db.restaurant.find().sort({name:1})
+
+19. MongoDb query to arrange the name of restaurants in descending order along with all the columns.
+    db.restaurant.find().sort({name:-1})
+
+20. MongoDb query to arrange the name of cuisine in ascending order and for those same cuisine district should be in descending order
+    db.restaurant.find({}, {cuisine:1, district:1}).sort({cuisine:1, district:-1})
+
+21. MongoDb query to know whether all the addresses contain the street or not
+    db.restaurant.find({'address.street':{$exists: true} })
+
+22. MongoDb query which will select all documents in the restaurant collection where the coord field value is double
+    db.restaurant.find({'address.coord': {$type:1} })
+
+23. MongoDb query to find the restaurant name, district, longitude, latitude and cuisine for those restaurants which contains "Mad" as first 3 letters of its name
+    db.restaurant.find({name:{$regex: /^Mad/} },{name:1, district:1, cuisine:1, 'address.coord':1})
