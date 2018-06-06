@@ -1,0 +1,25 @@
+Student
+---------------
+
+{
+        "name" : "String type data",
+        "loan" : Array[
+                {
+                        "book" : {
+                                "name" : "String type data",
+                                "isbn" : "String type data",
+                                "author" : "String type data",
+                                "keyword" : Array["String type data"]
+                        },
+                        "loan_detail" : {
+                                "dueDate" : "Date type data",
+                                "issuedDate" : "Date type data",
+                                "isReturned" : "Boolean type data",
+                                "returnedDate" : "TimeStamp type data"
+                        }
+                }
+        ]
+}
+
+db.Student.createIndex(loan.book.keyword: 1)
+db.Student.createIndex(loan.book.isbn: 1, loan.loan_detail.dueDate: 1)
