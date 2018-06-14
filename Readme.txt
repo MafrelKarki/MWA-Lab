@@ -1,1 +1,0 @@
-Please click on the respective Day's branches to find the assignments for that particular day.
